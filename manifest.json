@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Type to Read",
+  "version": "1.0",
+  "description": "Interactive reading by typing selected text",
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+.typed {
+  color: #4CAF50;
+  background-color: #E8F5E9;
+}
+
+.current {
+  color: #2196F3;
+  background-color: #E3F2FD;
+  font-weight: bold;
+}
+
+.untyped {
+  color: #757575;
+}
