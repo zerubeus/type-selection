@@ -1,12 +1,17 @@
+.typing-container {
+  display: inline;
+  font-size: 1.1em;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 .typed, .current, .incorrect, .untyped {
   display: inline;
-  font: inherit;
   margin: 0;
   padding: 0;
   border: 0;
   vertical-align: baseline;
   line-height: inherit;
-  font-size: inherit;
   font-family: inherit;
   font-weight: inherit;
   letter-spacing: inherit;
@@ -14,6 +19,8 @@
   white-space: normal;
   word-wrap: break-word;
   word-break: break-word;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Container span to prevent any spacing between child spans */

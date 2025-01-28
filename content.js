@@ -95,7 +95,7 @@ function restoreOriginalText() {
 function highlightText() {
   const range = originalSelection.getRangeAt(0);
   const container = document.createElement('span');
-  container.style.display = 'inline';
+  container.className = 'typing-container';
   container.style.whiteSpace = 'normal';
 
   const typedSpan = document.createElement('span');
@@ -119,4 +119,7 @@ function highlightText() {
 
   range.deleteContents();
   range.insertNode(container);
+
+  // Clear any existing text selection
+  window.getSelection().removeAllRanges();
 }
