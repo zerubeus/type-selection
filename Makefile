@@ -1,4 +1,4 @@
-.PHONY: build clean release bump-version tag publish help
+.PHONY: build clean release bump-version tag push-tag publish help
 
 # Version management
 VERSION := $(shell jq -r .version manifest.json)
@@ -41,8 +41,14 @@ tag:
 	@git tag -a v$(VERSION) -m "Release version $(VERSION)"
 	@echo "Tag created: v$(VERSION)"
 
+push-tag:
+	@echo "Pushing changes and tags to remote..."
+	@git push origin main
+	@git push origin v$(VERSION)
+	@echo "Changes and tags pushed!"
+
 # Create GitHub release
-publish: build
+publish: build push-tag
 	@echo "Creating GitHub release for v$(VERSION)..."
 	@gh release create v$(VERSION) \
 		--title "Type Selection v$(VERSION)" \
@@ -51,11 +57,9 @@ publish: build
 	@echo "GitHub release v$(VERSION) created!"
 
 # Full release process
-release: bump-version tag build publish
+release: bump-version tag build push-tag publish
 	@echo "Release v$(VERSION) completed!"
-	@echo "Don't forget to:"
-	@echo "1. Push the changes: git push origin main --tags"
-	@echo "2. Upload $(ZIP_FILE) to Chrome Web Store"
+	@echo "Don't forget to upload $(ZIP_FILE) to Chrome Web Store"
 
 # Help command
 help:
@@ -64,6 +68,7 @@ help:
 	@echo "  make clean         - Clean build files"
 	@echo "  make bump-version  - Bump version number"
 	@echo "  make tag           - Create git tag"
+	@echo "  make push-tag      - Push changes and tags to remote"
 	@echo "  make publish       - Create GitHub release"
 	@echo "  make release       - Full release process"
 	@echo "  make help          - Show this help" 
