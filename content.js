@@ -17,14 +17,35 @@ document.addEventListener('enableTypingMode', () => {
   }
 });
 
-document.addEventListener('mouseup', () => {
-  if (!isTypingMode) {
-    originalSelection = window.getSelection();
+document.addEventListener('mouseup', (e) => {
+  if (isTypingMode) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+  originalSelection = window.getSelection();
+});
+
+document.addEventListener('mousedown', (e) => {
+  if (isTypingMode) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
   }
 });
 
 document.addEventListener('keydown', (e) => {
-  if (isTypingMode && e.key === ' ') {
+  if (!isTypingMode) return;
+
+  if (e.key === 'Escape') {
+    isTypingMode = false;
+    currentIndex = 0;
+    isCurrentCharacterIncorrect = false;
+    console.log('Exited typing mode via ESC key');
+    return;
+  }
+
+  if (e.key === ' ') {
     e.preventDefault();
   }
 });
