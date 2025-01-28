@@ -8,6 +8,40 @@
 
 Type Selection is a Chrome extension that transforms your reading experience by making it interactive. As you type the text you've selected, it highlights your progress, helping you maintain focus and engage more deeply with the content.
 
+## Motivation
+
+Type Selection addresses three critical aspects of learning and productivity simultaneously:
+
+1. **Improved Typing Speed**: Regular practice through active engagement with text
+2. **Enhanced Reading Comprehension**: Converting passive reading into active participation
+3. **Sustained Focus**: Engaging directly with content instead of passive consumption
+
+### Research-Backed Benefits
+
+Recent research strongly supports the benefits of combining reading with active engagement through typing or writing:
+
+#### Active Engagement & Learning Outcomes
+
+- Studies show that combining reading with active writing tasks significantly improves proficiency in both skills
+- Higher writing motivation correlates with better performance and sustained attention
+- Active engagement through writing/typing forces deeper cognitive processing compared to passive reading
+
+#### Cognitive Benefits
+
+- The process requires analyzing and processing text actively, enhancing critical thinking
+- Active participation reduces anxiety and improves comprehension
+- Encourages metacognitive reflection and deeper understanding of content
+
+#### Focus Enhancement
+
+Research indicates that combining reading with active tasks:
+
+- Requires deeper processing of material
+- Promotes sustained attention through continuous engagement
+- Improves retention through active participation
+
+> "Current evidence supports the idea that writing or typing enhances focus by necessitating active engagement, leading to better comprehension and retention."
+
 ## Features
 
 - 🎯 Select any text on any webpage
