@@ -33,14 +33,17 @@ document.addEventListener('keypress', (e) => {
   const expectedChar = selectedText[currentIndex]?.toLowerCase();
   const typedChar = e.key.toLowerCase();
 
-  if (typedChar === expectedChar) {
+  if (expectedChar === ' ' && typedChar === ' ') {
     currentIndex++;
     highlightText();
+  } else if (typedChar === expectedChar) {
+    currentIndex++;
+    highlightText();
+  }
 
-    if (currentIndex >= selectedText.length) {
-      isTypingMode = false;
-      currentIndex = 0;
-    }
+  if (currentIndex >= selectedText.length) {
+    isTypingMode = false;
+    currentIndex = 0;
   }
 });
 
