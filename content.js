@@ -4,13 +4,14 @@ let isTypingMode = false;
 let originalSelection = null;
 let isCurrentCharacterIncorrect = false;
 let originalTextNode = null;
+let currentRange = null;
 
 document.addEventListener('enableTypingMode', () => {
   isTypingMode = true;
   const selection = window.getSelection();
   if (selection.toString().trim()) {
     selectedText = selection.toString();
-    originalSelection = selection;
+    currentRange = selection.getRangeAt(0).cloneRange();
     originalTextNode = selection.getRangeAt(0).cloneContents();
     currentIndex = 0;
     isCurrentCharacterIncorrect = false;
@@ -24,7 +25,10 @@ document.addEventListener('mouseup', (e) => {
     e.stopPropagation();
     return false;
   }
-  originalSelection = window.getSelection();
+  const selection = window.getSelection();
+  if (selection.toString().trim()) {
+    currentRange = selection.getRangeAt(0).cloneRange();
+  }
 });
 
 document.addEventListener('mousedown', (e) => {
@@ -42,7 +46,9 @@ document.addEventListener('keydown', (e) => {
     isTypingMode = false;
     currentIndex = 0;
     isCurrentCharacterIncorrect = false;
-    restoreOriginalText();
+    if (currentRange) {
+      restoreOriginalText();
+    }
     return;
   }
 
@@ -85,15 +91,17 @@ document.addEventListener('keypress', (e) => {
 });
 
 function restoreOriginalText() {
-  if (originalTextNode && originalSelection) {
-    const range = originalSelection.getRangeAt(0);
+  if (originalTextNode && currentRange) {
+    const range = currentRange.cloneRange();
     range.deleteContents();
     range.insertNode(originalTextNode.cloneNode(true));
   }
 }
 
 function highlightText() {
-  const range = originalSelection.getRangeAt(0);
+  if (!currentRange) return;
+
+  const range = currentRange.cloneRange();
   const container = document.createElement('span');
   container.className = 'typing-container';
   container.style.whiteSpace = 'normal';
@@ -119,7 +127,4 @@ function highlightText() {
 
   range.deleteContents();
   range.insertNode(container);
-
-  // Clear any existing text selection
-  window.getSelection().removeAllRanges();
 }
