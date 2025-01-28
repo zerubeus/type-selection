@@ -102,9 +102,23 @@ function highlightText() {
   if (!currentRange) return;
 
   const range = currentRange.cloneRange();
+
+  // Get the original element's computed styles
+  const originalElement = range.startContainer.parentElement;
+  const computedStyle = window.getComputedStyle(originalElement);
+
   const container = document.createElement('span');
   container.className = 'typing-container';
   container.style.whiteSpace = 'normal';
+
+  // Copy relevant styles from the original element
+  container.style.fontFamily = computedStyle.fontFamily;
+  container.style.fontSize = computedStyle.fontSize;
+  container.style.fontWeight = computedStyle.fontWeight;
+  container.style.fontStyle = computedStyle.fontStyle;
+  container.style.lineHeight = computedStyle.lineHeight;
+  container.style.letterSpacing = computedStyle.letterSpacing;
+  container.style.wordSpacing = computedStyle.wordSpacing;
 
   const typedSpan = document.createElement('span');
   typedSpan.className = 'typed';
