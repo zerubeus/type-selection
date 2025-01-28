@@ -3,6 +3,7 @@ let currentIndex = 0;
 let isTypingMode = false;
 let originalSelection = null;
 let isCurrentCharacterIncorrect = false;
+let originalTextNode = null;
 
 document.addEventListener('enableTypingMode', () => {
   isTypingMode = true;
@@ -10,6 +11,7 @@ document.addEventListener('enableTypingMode', () => {
   if (selection.toString().trim()) {
     selectedText = selection.toString();
     originalSelection = selection;
+    originalTextNode = selection.getRangeAt(0).cloneContents();
     currentIndex = 0;
     isCurrentCharacterIncorrect = false;
     highlightText();
@@ -41,6 +43,7 @@ document.addEventListener('keydown', (e) => {
     isTypingMode = false;
     currentIndex = 0;
     isCurrentCharacterIncorrect = false;
+    restoreOriginalText();
     console.log('Exited typing mode via ESC key');
     return;
   }
@@ -89,6 +92,14 @@ document.addEventListener('keypress', (e) => {
     currentIndex = 0;
   }
 });
+
+function restoreOriginalText() {
+  if (originalTextNode && originalSelection) {
+    const range = originalSelection.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(originalTextNode.cloneNode(true));
+  }
+}
 
 function highlightText() {
   const range = originalSelection.getRangeAt(0);
