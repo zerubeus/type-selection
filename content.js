@@ -95,13 +95,12 @@ function restoreOriginalText() {
 function highlightText() {
   const range = originalSelection.getRangeAt(0);
   const span = document.createElement('span');
-  span.innerHTML = `
-    <span class="typed">${selectedText.substring(0, currentIndex)}</span>
-    <span class="${
+  span.innerHTML =
+    `<span class="typed">${selectedText.substring(0, currentIndex)}</span>` +
+    `<span class="${
       isCurrentCharacterIncorrect ? 'incorrect' : 'current'
-    }">${selectedText.substring(currentIndex, currentIndex + 1)}</span>
-    <span class="untyped">${selectedText.substring(currentIndex + 1)}</span>
-  `;
+    }">${selectedText.substring(currentIndex, currentIndex + 1)}</span>` +
+    `<span class="untyped">${selectedText.substring(currentIndex + 1)}</span>`;
 
   range.deleteContents();
   range.insertNode(span);

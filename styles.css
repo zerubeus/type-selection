@@ -11,6 +11,16 @@
   font-weight: inherit;
   letter-spacing: inherit;
   word-spacing: inherit;
+  white-space: pre;
+}
+
+/* Container span to prevent any spacing between child spans */
+.typed + .current,
+.typed + .incorrect,
+.current + .untyped,
+.incorrect + .untyped {
+  margin-left: 0;
+  letter-spacing: inherit;
 }
 
 .typed {
