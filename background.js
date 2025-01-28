@@ -1,5 +1,3 @@
-console.log('BACKGROUND SCRIPT START'); // Debug log - Verifying background script execution
-
 if (!chrome.scripting) {
   console.error(
     'chrome.scripting is undefined at background script start. Check permissions in manifest.json and reload the extension.'
@@ -7,9 +5,7 @@ if (!chrome.scripting) {
 } else {
   console.log('chrome.scripting is available at background script start.');
 }
-console.log('Background script loaded'); // Debug log
 
-// Check if context menu already exists to prevent "duplicate id" error
 chrome.contextMenus.create(
   {
     id: 'typeSelection',
@@ -23,15 +19,13 @@ chrome.contextMenus.create(
         chrome.runtime.lastError.message
       );
     } else {
-      console.log('Context menu created'); // Debug log
+      console.log('Context menu created');
     }
   }
 );
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
-  console.log('Context menu item clicked:', info.menuItemId); // Debug log
   if (info.menuItemId === 'typeSelection') {
-    console.log('TypeSelection context menu clicked'); // Debug log
     chrome.scripting
       .executeScript({
         target: { tabId: tab.id },

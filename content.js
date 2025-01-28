@@ -15,7 +15,6 @@ document.addEventListener('enableTypingMode', () => {
     currentIndex = 0;
     isCurrentCharacterIncorrect = false;
     highlightText();
-    console.log('Type selection mode enabled via context menu'); // Debug log
   }
 });
 
@@ -44,7 +43,6 @@ document.addEventListener('keydown', (e) => {
     currentIndex = 0;
     isCurrentCharacterIncorrect = false;
     restoreOriginalText();
-    console.log('Exited typing mode via ESC key');
     return;
   }
 
@@ -58,11 +56,6 @@ document.addEventListener('keyup', (e) => {
 
   if (e.key === ' ') {
     const expectedChar = selectedText[currentIndex];
-    console.log(
-      'Space pressed. Expected:',
-      expectedChar === ' ' ? 'space' : expectedChar
-    );
-
     if (expectedChar === ' ') {
       currentIndex++;
       highlightText();
@@ -75,8 +68,6 @@ document.addEventListener('keypress', (e) => {
 
   const expectedChar = selectedText[currentIndex]?.toLowerCase();
   const typedChar = e.key.toLowerCase();
-
-  console.log('Typed:', typedChar, 'Expected:', expectedChar);
 
   if (typedChar === expectedChar && expectedChar !== ' ') {
     isCurrentCharacterIncorrect = false;
