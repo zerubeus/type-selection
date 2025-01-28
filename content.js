@@ -27,16 +27,32 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+document.addEventListener('keyup', (e) => {
+  if (!isTypingMode || !selectedText) return;
+
+  if (e.key === ' ') {
+    const expectedChar = selectedText[currentIndex];
+    console.log(
+      'Space pressed. Expected:',
+      expectedChar === ' ' ? 'space' : expectedChar
+    );
+
+    if (expectedChar === ' ') {
+      currentIndex++;
+      highlightText();
+    }
+  }
+});
+
 document.addEventListener('keypress', (e) => {
   if (!isTypingMode || !selectedText) return;
 
   const expectedChar = selectedText[currentIndex]?.toLowerCase();
   const typedChar = e.key.toLowerCase();
 
-  if (expectedChar === ' ' && typedChar === ' ') {
-    currentIndex++;
-    highlightText();
-  } else if (typedChar === expectedChar) {
+  console.log('Typed:', typedChar, 'Expected:', expectedChar);
+
+  if (typedChar === expectedChar && expectedChar !== ' ') {
     currentIndex++;
     highlightText();
   }
