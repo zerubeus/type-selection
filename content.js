@@ -2,6 +2,7 @@ let selectedText = '';
 let currentIndex = 0;
 let isTypingMode = false;
 let originalSelection = null;
+let isCurrentCharacterIncorrect = false;
 
 document.addEventListener('enableTypingMode', () => {
   isTypingMode = true;
@@ -10,6 +11,7 @@ document.addEventListener('enableTypingMode', () => {
     selectedText = selection.toString();
     originalSelection = selection;
     currentIndex = 0;
+    isCurrentCharacterIncorrect = false;
     highlightText();
     console.log('Type selection mode enabled via context menu'); // Debug log
   }
@@ -53,7 +55,11 @@ document.addEventListener('keypress', (e) => {
   console.log('Typed:', typedChar, 'Expected:', expectedChar);
 
   if (typedChar === expectedChar && expectedChar !== ' ') {
+    isCurrentCharacterIncorrect = false;
     currentIndex++;
+    highlightText();
+  } else if (expectedChar !== ' ') {
+    isCurrentCharacterIncorrect = true;
     highlightText();
   }
 
@@ -68,10 +74,9 @@ function highlightText() {
   const span = document.createElement('span');
   span.innerHTML = `
     <span class="typed">${selectedText.substring(0, currentIndex)}</span>
-    <span class="current">${selectedText.substring(
-      currentIndex,
-      currentIndex + 1
-    )}</span>
+    <span class="${
+      isCurrentCharacterIncorrect ? 'incorrect' : 'current'
+    }">${selectedText.substring(currentIndex, currentIndex + 1)}</span>
     <span class="untyped">${selectedText.substring(currentIndex + 1)}</span>
   `;
 

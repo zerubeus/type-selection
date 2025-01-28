@@ -9,6 +9,12 @@
   font-weight: bold;
 }
 
+.incorrect {
+  color: #F44336;
+  background-color: #FFEBEE;
+  font-weight: bold;
+}
+
 .untyped {
   color: #757575;
 }
