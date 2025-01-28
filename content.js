@@ -11,6 +11,7 @@ document.addEventListener('enableTypingMode', () => {
     originalSelection = selection;
     currentIndex = 0;
     highlightText();
+    console.log('Type selection mode enabled via context menu'); // Debug log
   }
 });
 
