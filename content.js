@@ -3,14 +3,26 @@ let currentIndex = 0;
 let isTypingMode = false;
 let originalSelection = null;
 
-document.addEventListener('mouseup', () => {
+document.addEventListener('enableTypingMode', () => {
+  isTypingMode = true;
   const selection = window.getSelection();
   if (selection.toString().trim()) {
     selectedText = selection.toString();
     originalSelection = selection;
     currentIndex = 0;
-    isTypingMode = true;
     highlightText();
+  }
+});
+
+document.addEventListener('mouseup', () => {
+  if (!isTypingMode) {
+    originalSelection = window.getSelection();
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (isTypingMode && e.key === ' ') {
+    e.preventDefault();
   }
 });
 
@@ -36,10 +48,13 @@ function highlightText() {
   const span = document.createElement('span');
   span.innerHTML = `
     <span class="typed">${selectedText.substring(0, currentIndex)}</span>
-    <span class="current">${selectedText.substring(currentIndex, currentIndex + 1)}</span>
+    <span class="current">${selectedText.substring(
+      currentIndex,
+      currentIndex + 1
+    )}</span>
     <span class="untyped">${selectedText.substring(currentIndex + 1)}</span>
   `;
-  
+
   range.deleteContents();
   range.insertNode(span);
 }
