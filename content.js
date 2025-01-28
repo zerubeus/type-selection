@@ -113,7 +113,6 @@ function highlightText() {
 
   // Copy relevant styles from the original element
   container.style.fontFamily = computedStyle.fontFamily;
-  container.style.fontSize = computedStyle.fontSize;
   container.style.fontWeight = computedStyle.fontWeight;
   container.style.fontStyle = computedStyle.fontStyle;
   container.style.lineHeight = computedStyle.lineHeight;

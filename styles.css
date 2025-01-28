@@ -1,10 +1,10 @@
 .typing-container {
   display: inline;
-  font-size: 1.1em;
-  user-select: none;
-  -webkit-user-select: none;
   font: inherit;
   font-family: inherit !important;
+  font-size: 1.1em !important;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .typed, .current, .incorrect, .untyped {
@@ -17,7 +17,6 @@
   font: inherit !important;
   font-family: inherit !important;
   font-weight: inherit;
-  font-size: inherit;
   font-style: inherit;
   letter-spacing: inherit;
   word-spacing: inherit;
