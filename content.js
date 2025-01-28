@@ -94,14 +94,29 @@ function restoreOriginalText() {
 
 function highlightText() {
   const range = originalSelection.getRangeAt(0);
-  const span = document.createElement('span');
-  span.innerHTML =
-    `<span class="typed">${selectedText.substring(0, currentIndex)}</span>` +
-    `<span class="${
-      isCurrentCharacterIncorrect ? 'incorrect' : 'current'
-    }">${selectedText.substring(currentIndex, currentIndex + 1)}</span>` +
-    `<span class="untyped">${selectedText.substring(currentIndex + 1)}</span>`;
+  const container = document.createElement('span');
+  container.style.display = 'inline';
+  container.style.whiteSpace = 'normal';
+
+  const typedSpan = document.createElement('span');
+  typedSpan.className = 'typed';
+  typedSpan.textContent = selectedText.substring(0, currentIndex);
+
+  const currentSpan = document.createElement('span');
+  currentSpan.className = isCurrentCharacterIncorrect ? 'incorrect' : 'current';
+  currentSpan.textContent = selectedText.substring(
+    currentIndex,
+    currentIndex + 1
+  );
+
+  const untypedSpan = document.createElement('span');
+  untypedSpan.className = 'untyped';
+  untypedSpan.textContent = selectedText.substring(currentIndex + 1);
+
+  container.appendChild(typedSpan);
+  container.appendChild(currentSpan);
+  container.appendChild(untypedSpan);
 
   range.deleteContents();
-  range.insertNode(span);
+  range.insertNode(container);
 }

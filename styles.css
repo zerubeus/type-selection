@@ -11,7 +11,9 @@
   font-weight: inherit;
   letter-spacing: inherit;
   word-spacing: inherit;
-  white-space: pre;
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 /* Container span to prevent any spacing between child spans */
