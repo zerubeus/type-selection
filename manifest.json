@@ -3,6 +3,11 @@
   "name": "Type to Read",
   "version": "1.0",
   "description": "Interactive reading by typing selected text",
+  "icons": {
+    "16": "typeselection.png",
+    "48": "typeselection.png",
+    "128": "typeselection.png"
+  },
   "permissions": ["activeTab", "contextMenus", "scripting"],
   "content_scripts": [
     {
