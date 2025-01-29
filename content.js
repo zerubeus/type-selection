@@ -72,14 +72,17 @@ document.addEventListener('keyup', (e) => {
       expectedChar === '.' ||
       /\s/.test(expectedChar)
     ) {
-      // Handle consecutive dots (ellipsis)
-      while (
-        currentIndex < selectedText.length &&
-        (selectedText[currentIndex] === '.' ||
-          selectedText[currentIndex] === ' ' ||
-          /\s/.test(selectedText[currentIndex]))
-      ) {
-        currentIndex++;
+      // Handle consecutive dots and spaces
+      let dotCount = 0;
+      while (currentIndex < selectedText.length) {
+        const char = selectedText[currentIndex];
+        if (char === '.' || char === ' ' || /\s/.test(char)) {
+          currentIndex++;
+          if (char === '.') dotCount++;
+        } else {
+          // If we've processed all dots (usually 3 for ellipsis), break
+          if (dotCount >= 3 || dotCount === 0) break;
+        }
       }
       highlightText();
     }
@@ -130,11 +133,8 @@ document.addEventListener('keypress', (e) => {
   const normalizedExpected = normalizeChar(expectedChar);
   const normalizedTyped = normalizeChar(typedChar);
 
-  if (
-    normalizedTyped === normalizedExpected &&
-    expectedChar !== ' ' &&
-    expectedChar !== '.'
-  ) {
+  // Handle quotes and regular characters
+  if (normalizedTyped === normalizedExpected) {
     isCurrentCharacterIncorrect = false;
     currentIndex++;
     highlightText();
