@@ -4,6 +4,13 @@
   <img src="typeselection.png" alt="TypePractice Select Logo" width="128" height="128">
 </div>
 
+<div align="center">
+  <h3>Watch Demo</h3>
+  <a href="https://youtu.be/AnXGM5eEXSM">
+    <img src="https://img.youtube.com/vi/AnXGM5eEXSM/0.jpg" alt="TypePractice Select Demo Video" width="600">
+  </a>
+</div>
+
 ## Overview
 
 TypePractice Select is a Chrome extension that transforms your reading experience by making it interactive. As you type the text you've selected, it highlights your progress, helping you maintain focus and engage more deeply with the content.
