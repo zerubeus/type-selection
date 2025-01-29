@@ -16,6 +16,14 @@ document.addEventListener('enableTypingMode', () => {
     originalTextNode = originalRange.cloneContents();
     currentIndex = 0;
     isCurrentCharacterIncorrect = false;
+
+    // First, delete the original content
+    originalRange.deleteContents();
+
+    // Then clear the selection
+    selection.removeAllRanges();
+
+    // Finally, set up our typing interface
     highlightText();
   }
 });
@@ -136,10 +144,17 @@ function restoreOriginalText() {
 function highlightText() {
   if (!originalRange) return;
 
+  // Create a working copy of the original range
   const range = originalRange.cloneRange();
+
+  // Remove any existing typing containers
+  const existingContainers = document.querySelectorAll('.typing-container');
+  existingContainers.forEach((container) => container.remove());
+
+  // Create and set up the new container
   const container = document.createElement('span');
   container.className = 'typing-container';
-  container.style.whiteSpace = 'normal';
+  container.style.whiteSpace = 'pre-wrap';
 
   // Get the original element's computed styles
   const originalElement = range.startContainer.parentElement;
@@ -172,17 +187,26 @@ function highlightText() {
   container.appendChild(currentSpan);
   container.appendChild(untypedSpan);
 
-  // Use the original range for modifications
+  // Clear the range contents and insert our container
   range.deleteContents();
   range.insertNode(container);
 }
 
 // Add new function to handle exiting typing mode
 function exitTypingMode() {
+  if (!isTypingMode) return;
+
   isTypingMode = false;
   currentIndex = 0;
   isCurrentCharacterIncorrect = false;
+
+  // Remove any existing typing containers from the page
+  const existingContainers = document.querySelectorAll('.typing-container');
+  existingContainers.forEach((container) => container.remove());
+
+  // Restore the original text
   restoreOriginalText();
+
   // Reset all variables
   selectedText = '';
   originalRange = null;
