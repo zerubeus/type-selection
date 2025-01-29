@@ -5,10 +5,8 @@
 </div>
 
 <div align="center">
-  <h3>Watch Demo</h3>
-  <a href="https://youtu.be/AnXGM5eEXSM">
-    <img src="https://img.youtube.com/vi/AnXGM5eEXSM/0.jpg" alt="TypePractice Select Demo Video" width="600">
-  </a>
+  <h3>Demo</h3>
+  <img src="typeselection.gif" alt="TypePractice Select Demo" width="600">
 </div>
 
 ## Overview
