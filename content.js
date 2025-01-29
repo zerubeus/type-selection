@@ -75,18 +75,19 @@ document.addEventListener('keypress', (e) => {
   const expectedChar = selectedText[currentIndex];
   const typedChar = e.key;
 
-  // Handle special characters like apostrophes and quotes
-  if (
-    (expectedChar === "'" || expectedChar === "'") &&
-    (typedChar === "'" || typedChar === "'")
-  ) {
-    isCurrentCharacterIncorrect = false;
-    currentIndex++;
-    highlightText();
-  } else if (
-    typedChar.toLowerCase() === expectedChar?.toLowerCase() &&
-    expectedChar !== ' '
-  ) {
+  // Normalize apostrophes and quotes
+  const normalizeChar = (char) => {
+    // Handle all possible apostrophe variants
+    if (["'", "'", "'", '′', '`'].includes(char)) {
+      return "'";
+    }
+    return char.toLowerCase();
+  };
+
+  const normalizedExpected = normalizeChar(expectedChar);
+  const normalizedTyped = normalizeChar(typedChar);
+
+  if (normalizedTyped === normalizedExpected && expectedChar !== ' ') {
     isCurrentCharacterIncorrect = false;
     currentIndex++;
     highlightText();
