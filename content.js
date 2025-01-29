@@ -44,10 +44,7 @@ document.addEventListener('keydown', (e) => {
   if (!isTypingMode) return;
 
   if (e.key === 'Escape') {
-    isTypingMode = false;
-    currentIndex = 0;
-    isCurrentCharacterIncorrect = false;
-    restoreOriginalText();
+    exitTypingMode();
     return;
   }
 
@@ -109,8 +106,7 @@ document.addEventListener('keypress', (e) => {
   }
 
   if (currentIndex >= selectedText.length) {
-    isTypingMode = false;
-    currentIndex = 0;
+    exitTypingMode();
   }
 });
 
@@ -166,4 +162,16 @@ function highlightText() {
   // Use the original range for modifications
   range.deleteContents();
   range.insertNode(container);
+}
+
+// Add new function to handle exiting typing mode
+function exitTypingMode() {
+  isTypingMode = false;
+  currentIndex = 0;
+  isCurrentCharacterIncorrect = false;
+  restoreOriginalText();
+  // Reset all variables
+  selectedText = '';
+  originalRange = null;
+  originalTextNode = null;
 }
