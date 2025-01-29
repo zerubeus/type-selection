@@ -77,37 +77,28 @@ document.addEventListener('keypress', (e) => {
 
   // Normalize apostrophes and quotes
   const normalizeChar = (char) => {
-    // Log the character code to understand what we're dealing with
-    console.log('Character:', char, 'Code:', char.charCodeAt(0));
+    const code = char.charCodeAt(0);
 
-    // Handle all possible apostrophe variants including Unicode variants
-    const apostropheVariants = [
-      "'", // Straight quote U+0027
-      "'", // Right single quotation U+2019
-      "'", // Left single quotation U+2018
-      '′', // Prime U+2032
-      '`', // Backtick U+0060
-      '‵', // Reversed prime U+2035
-      'ʹ', // Modifier letter prime U+02B9
-      'ʻ', // Modifier letter turned comma U+02BB
+    // Map of apostrophe-like character codes
+    const apostropheCodes = [
+      0x0027, // Straight quote '
+      0x2019, // Right single quotation '
+      0x2018, // Left single quotation '
+      0x2032, // Prime ′
+      0x0060, // Backtick `
+      0x2035, // Reversed prime ‵
+      0x02b9, // Modifier letter prime ʹ
+      0x02bb, // Modifier letter turned comma ʻ
     ];
 
-    if (apostropheVariants.includes(char)) {
-      return "'";
+    if (apostropheCodes.includes(code)) {
+      return 0x0027; // Return the code for straight quote
     }
-    return char.toLowerCase();
+    return char.toLowerCase().charCodeAt(0);
   };
 
   const normalizedExpected = normalizeChar(expectedChar);
   const normalizedTyped = normalizeChar(typedChar);
-
-  console.log('Expected:', expectedChar, 'Typed:', typedChar);
-  console.log(
-    'Normalized Expected:',
-    normalizedExpected,
-    'Normalized Typed:',
-    normalizedTyped
-  );
 
   if (normalizedTyped === normalizedExpected && expectedChar !== ' ') {
     isCurrentCharacterIncorrect = false;
