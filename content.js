@@ -66,8 +66,21 @@ document.addEventListener('keyup', (e) => {
 
   if (e.key === ' ') {
     const expectedChar = selectedText[currentIndex];
-    if (expectedChar === ' ') {
-      currentIndex++;
+    // Check for space, dots, or other whitespace characters
+    if (
+      expectedChar === ' ' ||
+      expectedChar === '.' ||
+      /\s/.test(expectedChar)
+    ) {
+      // Handle consecutive dots (ellipsis)
+      while (
+        currentIndex < selectedText.length &&
+        (selectedText[currentIndex] === '.' ||
+          selectedText[currentIndex] === ' ' ||
+          /\s/.test(selectedText[currentIndex]))
+      ) {
+        currentIndex++;
+      }
       highlightText();
     }
   }
@@ -117,11 +130,15 @@ document.addEventListener('keypress', (e) => {
   const normalizedExpected = normalizeChar(expectedChar);
   const normalizedTyped = normalizeChar(typedChar);
 
-  if (normalizedTyped === normalizedExpected && expectedChar !== ' ') {
+  if (
+    normalizedTyped === normalizedExpected &&
+    expectedChar !== ' ' &&
+    expectedChar !== '.'
+  ) {
     isCurrentCharacterIncorrect = false;
     currentIndex++;
     highlightText();
-  } else if (expectedChar !== ' ') {
+  } else if (expectedChar !== ' ' && expectedChar !== '.') {
     isCurrentCharacterIncorrect = true;
     highlightText();
   }
