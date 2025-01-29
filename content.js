@@ -1,18 +1,19 @@
 let selectedText = '';
 let currentIndex = 0;
 let isTypingMode = false;
-let originalSelection = null;
+let originalRange = null;
 let isCurrentCharacterIncorrect = false;
 let originalTextNode = null;
-let currentRange = null;
 
 document.addEventListener('enableTypingMode', () => {
   isTypingMode = true;
   const selection = window.getSelection();
   if (selection.toString().trim()) {
     selectedText = selection.toString();
-    currentRange = selection.getRangeAt(0).cloneRange();
-    originalTextNode = selection.getRangeAt(0).cloneContents();
+    // Store the original range before any modifications
+    originalRange = selection.getRangeAt(0).cloneRange();
+    // Store the original text content
+    originalTextNode = originalRange.cloneContents();
     currentIndex = 0;
     isCurrentCharacterIncorrect = false;
     highlightText();
@@ -27,7 +28,7 @@ document.addEventListener('mouseup', (e) => {
   }
   const selection = window.getSelection();
   if (selection.toString().trim()) {
-    currentRange = selection.getRangeAt(0).cloneRange();
+    originalRange = selection.getRangeAt(0).cloneRange();
   }
 });
 
@@ -46,9 +47,7 @@ document.addEventListener('keydown', (e) => {
     isTypingMode = false;
     currentIndex = 0;
     isCurrentCharacterIncorrect = false;
-    if (currentRange) {
-      restoreOriginalText();
-    }
+    restoreOriginalText();
     return;
   }
 
@@ -116,25 +115,26 @@ document.addEventListener('keypress', (e) => {
 });
 
 function restoreOriginalText() {
-  if (originalTextNode && currentRange) {
-    const range = currentRange.cloneRange();
+  if (originalTextNode && originalRange) {
+    const range = originalRange.cloneRange();
     range.deleteContents();
     range.insertNode(originalTextNode.cloneNode(true));
+    // Clear selection
+    window.getSelection().removeAllRanges();
   }
 }
 
 function highlightText() {
-  if (!currentRange) return;
+  if (!originalRange) return;
 
-  const range = currentRange.cloneRange();
+  const range = originalRange.cloneRange();
+  const container = document.createElement('span');
+  container.className = 'typing-container';
+  container.style.whiteSpace = 'normal';
 
   // Get the original element's computed styles
   const originalElement = range.startContainer.parentElement;
   const computedStyle = window.getComputedStyle(originalElement);
-
-  const container = document.createElement('span');
-  container.className = 'typing-container';
-  container.style.whiteSpace = 'normal';
 
   // Copy relevant styles from the original element
   container.style.fontFamily = computedStyle.fontFamily;
@@ -163,6 +163,7 @@ function highlightText() {
   container.appendChild(currentSpan);
   container.appendChild(untypedSpan);
 
+  // Use the original range for modifications
   range.deleteContents();
   range.insertNode(container);
 }
