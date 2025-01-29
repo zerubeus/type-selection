@@ -1,19 +1,29 @@
 {
   "manifest_version": 3,
   "name": "TypePractice Select",
-  "version": "1.3",
+  "version": "1.4",
   "description": "Interactive reading by typing selected text",
   "icons": {
     "16": "typeselection.png",
     "48": "typeselection.png",
     "128": "typeselection.png"
   },
-  "permissions": ["activeTab", "contextMenus", "scripting"],
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "scripting"
+  ],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["styles.css"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "styles.css"
+      ]
     }
   ],
   "background": {
