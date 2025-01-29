@@ -77,7 +77,7 @@ document.addEventListener('keypress', (e) => {
 
     // Map of apostrophe-like character codes
     const apostropheCodes = [
-      0x0027, // Straight quote '
+      0x0027, // Straight single quote '
       0x2019, // Right single quotation '
       0x2018, // Left single quotation '
       0x2032, // Prime ′
@@ -87,8 +87,21 @@ document.addEventListener('keypress', (e) => {
       0x02bb, // Modifier letter turned comma ʻ
     ];
 
+    // Map of double quote character codes
+    const doubleQuoteCodes = [
+      0x0022, // Straight double quote "
+      0x201c, // Left double quote "
+      0x201d, // Right double quote "
+      0x2033, // Double prime ″
+      0x02dd, // Double acute accent ˝
+      0x3003, // Ditto mark 〃
+    ];
+
     if (apostropheCodes.includes(code)) {
-      return 0x0027; // Return the code for straight quote
+      return 0x0027; // Return the code for straight single quote
+    }
+    if (doubleQuoteCodes.includes(code)) {
+      return 0x0022; // Return the code for straight double quote
     }
     return char.toLowerCase().charCodeAt(0);
   };
