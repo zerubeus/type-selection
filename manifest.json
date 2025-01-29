@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Type to Read",
+  "name": "TypePractice Select",
   "version": "1.3",
   "description": "Interactive reading by typing selected text",
   "icons": {
@@ -8,22 +8,12 @@
     "48": "typeselection.png",
     "128": "typeselection.png"
   },
-  "permissions": [
-    "activeTab",
-    "contextMenus",
-    "scripting"
-  ],
+  "permissions": ["activeTab", "contextMenus", "scripting"],
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "content.js"
-      ],
-      "css": [
-        "styles.css"
-      ]
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
     }
   ],
   "background": {

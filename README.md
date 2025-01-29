@@ -1,16 +1,16 @@
-# Type Selection
+# TypePractice Select
 
 <div align="center">
-  <img src="typeselection.png" alt="Type Selection Logo" width="128" height="128">
+  <img src="typeselection.png" alt="TypePractice Select Logo" width="128" height="128">
 </div>
 
 ## Overview
 
-Type Selection is a Chrome extension that transforms your reading experience by making it interactive. As you type the text you've selected, it highlights your progress, helping you maintain focus and engage more deeply with the content.
+TypePractice Select is a Chrome extension that transforms your reading experience by making it interactive. As you type the text you've selected, it highlights your progress, helping you maintain focus and engage more deeply with the content.
 
 ## Motivation
 
-Type Selection addresses three critical aspects of learning and productivity simultaneously:
+TypePractice Select addresses three critical aspects of learning and productivity simultaneously:
 
 1. **Improved Typing Speed**: Regular practice through active engagement with text
 2. **Enhanced Reading Comprehension**: Converting passive reading into active participation
@@ -53,13 +53,13 @@ Research indicates that combining reading with active tasks:
 ## How to Use
 
 1. Select any text on a webpage
-2. Right-click and select `Type Selection` from the context menu
+2. Right-click and select `TypePractice Select` from the context menu
 3. Start typing the selected text:
    - Correctly typed characters turn green
    - Current character to type is highlighted in blue
    - Incorrect typing is shown in red
    - Spaces must be typed to proceed to the next word
-4. Press `Esc` to exit Type Selection mode
+4. Press `Esc` to exit typing mode
 
 ## Installation
 

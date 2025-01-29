@@ -9,7 +9,7 @@ if (!chrome.scripting) {
 chrome.contextMenus.create(
   {
     id: 'typeSelection',
-    title: 'Type Selection',
+    title: 'TypePractice Select',
     contexts: ['selection'],
   },
   () => {
