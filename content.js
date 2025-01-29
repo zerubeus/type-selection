@@ -72,10 +72,21 @@ document.addEventListener('keyup', (e) => {
 document.addEventListener('keypress', (e) => {
   if (!isTypingMode || !selectedText) return;
 
-  const expectedChar = selectedText[currentIndex]?.toLowerCase();
-  const typedChar = e.key.toLowerCase();
+  const expectedChar = selectedText[currentIndex];
+  const typedChar = e.key;
 
-  if (typedChar === expectedChar && expectedChar !== ' ') {
+  // Handle special characters like apostrophes and quotes
+  if (
+    (expectedChar === "'" || expectedChar === "'") &&
+    (typedChar === "'" || typedChar === "'")
+  ) {
+    isCurrentCharacterIncorrect = false;
+    currentIndex++;
+    highlightText();
+  } else if (
+    typedChar.toLowerCase() === expectedChar?.toLowerCase() &&
+    expectedChar !== ' '
+  ) {
     isCurrentCharacterIncorrect = false;
     currentIndex++;
     highlightText();
