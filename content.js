@@ -65,27 +65,36 @@ document.addEventListener('keyup', (e) => {
   if (!isTypingMode || !selectedText) return;
 
   if (e.key === ' ') {
-    const expectedChar = selectedText[currentIndex];
-    // Check for space, dots, or other whitespace characters
+    let expectedChar = selectedText[currentIndex];
+
+    // Check if the current expected character is one that should be skipped by space
     if (
       expectedChar === ' ' ||
       expectedChar === '.' ||
       /\s/.test(expectedChar)
     ) {
-      // Handle consecutive dots and spaces
-      let dotCount = 0;
+      // Keep advancing as long as we encounter skippable characters
       while (currentIndex < selectedText.length) {
-        const char = selectedText[currentIndex];
-        if (char === '.' || char === ' ' || /\s/.test(char)) {
+        expectedChar = selectedText[currentIndex];
+        if (
+          expectedChar === ' ' ||
+          expectedChar === '.' ||
+          /\s/.test(expectedChar)
+        ) {
           currentIndex++;
-          if (char === '.') dotCount++;
         } else {
-          // If we've processed all dots (usually 3 for ellipsis), break
-          if (dotCount >= 3 || dotCount === 0) break;
+          // Stop advancing when a non-skippable character is found
+          break;
         }
       }
+      isCurrentCharacterIncorrect = false; // Reset error state after skipping
       highlightText();
     }
+    // Optional: Handle space press when the expected char is not skippable
+    // else {
+    //    isCurrentCharacterIncorrect = true;
+    //    highlightText();
+    // }
   }
 });
 
