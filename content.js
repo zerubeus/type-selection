@@ -56,6 +56,28 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
+  // Special case for ellipsis (both ... and the Unicode character …)
+  if (e.key === '.' || e.key === ' ') {
+    // Check if we're at a Unicode ellipsis character (U+2026)
+    if (selectedText.charAt(currentIndex) === '…') {
+      currentIndex++;
+      isCurrentCharacterIncorrect = false;
+      highlightText();
+      e.preventDefault();
+      return;
+    }
+
+    // Check if we're at the start of a three-dot ellipsis
+    const textAhead = selectedText.substring(currentIndex, currentIndex + 3);
+    if (textAhead === '...') {
+      currentIndex += 3;
+      isCurrentCharacterIncorrect = false;
+      highlightText();
+      e.preventDefault();
+      return;
+    }
+  }
+
   if (e.key === ' ') {
     e.preventDefault();
   }
@@ -70,12 +92,30 @@ document.addEventListener('keyup', (e) => {
   }
 
   if (e.key === ' ') {
+    // Special case for Unicode ellipsis character (U+2026)
+    if (selectedText.charAt(currentIndex) === '…') {
+      currentIndex++;
+      isCurrentCharacterIncorrect = false;
+      highlightText();
+      return;
+    }
+
+    // Special case for three-dot ellipsis
+    const textAhead = selectedText.substring(currentIndex, currentIndex + 3);
+    if (textAhead === '...') {
+      currentIndex += 3;
+      isCurrentCharacterIncorrect = false;
+      highlightText();
+      return;
+    }
+
     let expectedChar = selectedText[currentIndex];
 
     // Always allow skipping over skippable characters, even if error is active
     if (
       expectedChar === ' ' ||
       expectedChar === '.' ||
+      expectedChar === '…' || // Added Unicode ellipsis
       /\s/.test(expectedChar)
     ) {
       while (currentIndex < selectedText.length) {
@@ -83,6 +123,7 @@ document.addEventListener('keyup', (e) => {
         if (
           expectedChar === ' ' ||
           expectedChar === '.' ||
+          expectedChar === '…' || // Added Unicode ellipsis
           /\s/.test(expectedChar)
         ) {
           currentIndex++;
@@ -90,7 +131,7 @@ document.addEventListener('keyup', (e) => {
           break;
         }
       }
-      isCurrentCharacterIncorrect = false; // Always clear error after skip
+      isCurrentCharacterIncorrect = false;
       highlightText();
     }
   }
@@ -98,6 +139,26 @@ document.addEventListener('keyup', (e) => {
 
 document.addEventListener('keypress', (e) => {
   if (!isTypingMode || !selectedText) return;
+
+  // Special case for ellipsis
+  if (e.key === '.' || e.key === ' ') {
+    // Check for Unicode ellipsis character
+    if (selectedText.charAt(currentIndex) === '…') {
+      currentIndex++;
+      isCurrentCharacterIncorrect = false;
+      highlightText();
+      return;
+    }
+
+    // Check for three-dot ellipsis
+    const textAhead = selectedText.substring(currentIndex, currentIndex + 3);
+    if (textAhead === '...') {
+      currentIndex += 3;
+      isCurrentCharacterIncorrect = false;
+      highlightText();
+      return;
+    }
+  }
 
   const expectedChar = selectedText[currentIndex];
   const typedChar = e.key;
