@@ -64,16 +64,20 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('keyup', (e) => {
   if (!isTypingMode || !selectedText) return;
 
+  if (e.key === 'Escape') {
+    exitTypingMode();
+    return;
+  }
+
   if (e.key === ' ') {
     let expectedChar = selectedText[currentIndex];
 
-    // Check if the current expected character is one that should be skipped by space
+    // Always allow skipping over skippable characters, even if error is active
     if (
       expectedChar === ' ' ||
       expectedChar === '.' ||
       /\s/.test(expectedChar)
     ) {
-      // Keep advancing as long as we encounter skippable characters
       while (currentIndex < selectedText.length) {
         expectedChar = selectedText[currentIndex];
         if (
@@ -83,18 +87,12 @@ document.addEventListener('keyup', (e) => {
         ) {
           currentIndex++;
         } else {
-          // Stop advancing when a non-skippable character is found
           break;
         }
       }
-      isCurrentCharacterIncorrect = false; // Reset error state after skipping
+      isCurrentCharacterIncorrect = false; // Always clear error after skip
       highlightText();
     }
-    // Optional: Handle space press when the expected char is not skippable
-    // else {
-    //    isCurrentCharacterIncorrect = true;
-    //    highlightText();
-    // }
   }
 });
 
@@ -148,10 +146,8 @@ document.addEventListener('keypress', (e) => {
     currentIndex++;
     highlightText();
   } else {
-    // Always set incorrect flag and update highlight on any mismatch
     isCurrentCharacterIncorrect = true;
     highlightText();
-    // Do not advance currentIndex on error
   }
 
   if (currentIndex >= selectedText.length) {
