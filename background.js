@@ -36,18 +36,3 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
       .catch((err) => console.error('Failed to execute script:', err));
   }
 });
-
-function enableTypingMode() {
-  if (!chrome.scripting) {
-    console.error(
-      'chrome.scripting is undefined. Check permissions in manifest.json and reload the extension.'
-    );
-    return;
-  }
-  chrome.scripting.executeScript({
-    target: { activeTab: true },
-    function: () => {
-      document.dispatchEvent(new CustomEvent('enableTypingMode'));
-    },
-  });
-}
