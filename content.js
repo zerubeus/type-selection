@@ -147,9 +147,11 @@ document.addEventListener('keypress', (e) => {
     isCurrentCharacterIncorrect = false;
     currentIndex++;
     highlightText();
-  } else if (expectedChar !== ' ' && expectedChar !== '.') {
+  } else {
+    // Always set incorrect flag and update highlight on any mismatch
     isCurrentCharacterIncorrect = true;
     highlightText();
+    // Do not advance currentIndex on error
   }
 
   if (currentIndex >= selectedText.length) {
